@@ -128,16 +128,9 @@
     background-color:#e60000;
   }
   .entrar:hover {
-    background-color: #ec5050;
+    background-color: #fc6666;
   }
   
-  .cadastrar, .recuperar {
-    background-color: #000000;
-  }
-  .cadastrar:hover, .recuperar:hover {
-    background-color: #5e5e5e;
-  }
-
   h1{
     color: white;
   }
