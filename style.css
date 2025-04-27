@@ -1,0 +1,162 @@
+/* Reset básico */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  /* Estilo do body */
+  body {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(to top, #2E0000,
+    #450000,
+    #5C0000,
+    #730000,
+    #8A0000);
+
+  }
+  
+  /* Estilo principal do container */
+  .container {
+    width: 80%;
+    height: 80vh;
+    display: flex;
+    box-shadow: 10px 10px 10px #2E0000;
+    border-radius: 40px; /* <<< Adicione essa linha */
+    overflow: hidden; /* <<< Essa linha é importante pra borda arredondada cortar o conteúdo certinho */
+  }
+  
+  /* Área da imagem */
+  .form-image {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 1rem;
+    border-right: 1px solid #67aae4;
+  }
+  
+  .form-image img {
+    width: 28rem;
+  }
+  
+  /* Área do formulário */
+  .form {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(to top, #630000,
+    #720000,
+    #810000,
+    #910000,
+    #990000d7);
+    padding: 3rem;
+  }
+  
+  /* Cabeçalho do formulário */
+  .form-cabecalho {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .form-cabecalho h1 {
+    position: relative;
+  }
+  
+  .form-cabecalho h1::after {
+    content: '';
+    display: block;
+    width: 5rem;
+    height: 0.3rem;
+    background-color: #6c63ff;
+    margin: 0 auto;
+    position: absolute;
+    border-radius: 10px;
+  }
+  
+  /* Inputs */
+  .input-group {
+    width: 100%;
+    margin-top: 1rem;
+  }
+  
+  .input-box {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+  
+  .input-box input {
+    margin-top: 0.5rem;
+    padding: 0.8rem 1.2rem;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 1px 1px 6px #0000001c;
+    font-size: 1rem;
+  }
+  
+  .input-box input:hover {
+    background-color: #eeeeee75;
+  }
+  
+  .input-box input:focus-visible {
+    outline: 1px solid #6c63ff;
+  }
+  
+  .input-box label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #000000c0;
+  }
+  
+  /* Botões */
+  .button-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 2rem;
+  }
+  
+  .button-group button {
+    padding: 0.8rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.25s;
+  }
+  
+  /* Botões específicos */
+  .entrar {
+    background-color: rgb(142, 212, 71);
+  }
+  .entrar:hover {
+    background-color: rgb(107, 162, 52);
+  }
+  
+  .cadastrar, .recuperar {
+    background-color: #6c63ff;
+  }
+  .cadastrar:hover, .recuperar:hover {
+    background-color: #5a55d2;
+  }
+
+  h1{
+    color: white;
+  }
+  p{
+    color: white;
+  }
+
+  
