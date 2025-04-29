@@ -4,6 +4,11 @@
     box-sizing: border-box;
   }
 
+  body{
+    font-family: Arial, sans-serif;
+    background-color: #e0e0e0;
+  }
+
   .container{
     padding: 40px;
     display: flex;
@@ -16,18 +21,15 @@
     #ff0000);
   }
 
-  .nomeEmpresa{
-    color: white;
+  .nomeEmpresa h1{
+    color: #ffffff;
   }
-
-
-
 
 
   .links{
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 16px;
   }
 
   .links a{
@@ -39,46 +41,60 @@
     text-decoration: underline;
   }
 
+  .links a:focus {
+    outline: 2px solid white;
+  }
 
 
 
+
+
+
+    .usuario{
+        display: flex;
+        align-items: center;
+    }
 
 
 
   .usuario-box{
     display: flex;
     height: 40px;
-    width: 300px;
-    background-color: aliceblue;
+    width: 100%;
+    max-width: 375px;
     justify-content: space-between;
-    border: 1px solid rgb(0, 0, 0);
+    border: 1px solid #000000;
   }
 
-  
-
-
-
+  .icone-usuario{
+    color: white;
+    height: 40px;
+  }
 
   .nome-usuario{
     display: flex;
+    padding-right: 5px;
     padding-left: 5px;
-    background-color: rgb(255, 255, 255);
+    background-color: #ffffff;
     color: #000000;
-    width: 250px;
+    width: 325px;
     align-items: center;
-    flex-direction: center;
+    justify-content: center;
   }
 
-  
   .botao-sair{
-    background-color: rgb(255, 255, 255);
+    color: #ffffff;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: #a70000;
     cursor: pointer;
     border: none;
-    border-left: 1px solid black;
+    border-left: 1px solid #8A0000;
     width: 50px;
   }
+
   .botao-sair:hover{
-    background-color: rgb(204, 79, 79);
+    color: #000000;
+    background-color: #ff4d4d;
   }
 
 
@@ -90,4 +106,17 @@
       align-items: center;
       gap: 20px;
     }
-  }
+        .usuario-box {
+          width: 100%;
+          flex-direction: column;
+          height: auto;
+        }
+        .nome-usuario {
+          width: 100%;
+          padding: 10px;
+        }
+        .botao-sair {
+          width: 100%;
+        }
+      }
+      
