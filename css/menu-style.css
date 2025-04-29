@@ -1,0 +1,93 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  .container{
+    padding: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-image: linear-gradient(to bottom, #8A0000,
+    #a70000,
+    #c50000,
+    #e60000,
+    #ff0000);
+  }
+
+  .nomeEmpresa{
+    color: white;
+  }
+
+
+
+
+
+  .links{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .links a{
+    color: white;
+    text-decoration: none;
+  }
+
+  .links a:hover{
+    text-decoration: underline;
+  }
+
+
+
+
+
+
+
+  .usuario-box{
+    display: flex;
+    height: 40px;
+    width: 300px;
+    background-color: aliceblue;
+    justify-content: space-between;
+    border: 1px solid rgb(0, 0, 0);
+  }
+
+  
+
+
+
+
+  .nome-usuario{
+    display: flex;
+    padding-left: 5px;
+    background-color: rgb(255, 255, 255);
+    color: #000000;
+    width: 250px;
+    align-items: center;
+    flex-direction: center;
+  }
+
+  
+  .botao-sair{
+    background-color: rgb(255, 255, 255);
+    cursor: pointer;
+    border: none;
+    border-left: 1px solid black;
+    width: 50px;
+  }
+  .botao-sair:hover{
+    background-color: rgb(204, 79, 79);
+  }
+
+
+
+/*RESPONSIVIDADE*/
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+  }
