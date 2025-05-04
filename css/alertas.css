@@ -1,155 +1,241 @@
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 
-  body{
-    font-family: Arial, sans-serif;
-    background-color: #e0e0e0;
-  }
+body{
+  font-family: Arial, sans-serif;
+  background-color: #b9b8b8;
+}
 
-  .container{
-    padding: 40px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    background-image: linear-gradient(to bottom, #8A0000,
-    #a70000,
-    #c50000,
-    #e60000,
-    #ff0000);
-  }
+/*CABEÇALHO*/
+.container{
+  padding: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-image: linear-gradient(to bottom, #8A0000,
+  #a70000,
+  #c50000,
+  #e60000,
+  #ff0000);
+}
 
-  .nomeEmpresa h1{
-    color: #ffffff;
-  }
-
-
-  .links{
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .links a{
-    color: white;
-    text-decoration: none;
-  }
-
-  .links a:hover{
-    text-decoration: underline;
-  }
-
-  .links a:focus {
-    outline: 2px solid white;
-  }
+.nomeEmpresa h1{
+  color: #ffffff;
+}
 
 
+.links{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
 
+.links a{
+  color: white;
+  text-decoration: none;
+}
+
+.links a:hover{
+  text-decoration: underline;
+}
+
+.links a:focus {
+  outline: 2px solid white;
+}
 
 
 
-    .usuario{
-        display: flex;
-        align-items: center;
-    }
 
 
 
-  .usuario-box{
-    display: flex;
-    height: 40px;
-    width: 100%;
-    max-width: 375px;
-    justify-content: space-between;
-    border: 1px solid #000000;
-  }
-
-  .icone-usuario{
-    color: white;
-    height: 40px;
-  }
-
-  .nome-usuario{
-    display: flex;
-    padding-right: 5px;
-    padding-left: 5px;
-    background-color: #ffffff;
-    color: #000000;
-    width: 325px;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .botao-sair{
-    color: #ffffff;
-    transition: background-color 0.3s, color 0.3s;
-    background-color: #a70000;
-    cursor: pointer;
-    border: none;
-    border-left: 1px solid #8A0000;
-    width: 50px;
-  }
-
-  .botao-sair:hover{
-    color: #000000;
-    background-color: #ff4d4d;
+  .usuario{
+      display: flex;
+      align-items: center;
   }
 
 
 
+.usuario-box{
+  display: flex;
+  height: 40px;
+  width: 100%;
+  max-width: 375px;
+  justify-content: space-between;
+  border: 1px solid #000000;
+}
+
+.icone-usuario{
+  color: white;
+  height: 40px;
+}
+
+.nome-usuario{
+  display: flex;
+  padding-right: 5px;
+  padding-left: 5px;
+  background-color: #ffffff;
+  color: #000000;
+  width: 325px;
+  align-items: center;
+  justify-content: center;
+}
+
+.botao-sair{
+  color: #ffffff;
+  transition: background-color 0.3s, color 0.3s;
+  background-color: #a70000;
+  cursor: pointer;
+  border: none;
+  border-left: 1px solid #8A0000;
+  width: 50px;
+}
+
+.botao-sair:hover{
+  color: #000000;
+  background-color: #ff4d4d;
+}
 
 
-  /*ALERTAS*/
 
-  .conteudo-principal{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+/*CONTEUDO PRINCIPAL*/
 
-  .conteudo-principal h1{
-    padding-top: 30px;
-  }
+.fundo-da-tela{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #b9b8b8;
+  margin-top: 30px;
+}
 
-  .conteudo{
-    border: 2px solid black;
-    width: 180vh;
-    height: 600px;
-    margin-top: 50px;
-    padding-left: 20px;
-    padding-right: 20px;
-    justify-content: space-between;
-  }
+.conteudo-principal{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding-bottom: 39px;
+  width: 90%;
+  height: auto;
+  border: 2px solid #000000;
+}
 
-  .formulario-alerta{
-    display: flex;
-  }
+.titulo-cadastrar{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 2px solid #ff0000;
+}
 
-  #formAlerta{
-    display: flex;
-  }
+.formulario-alerta{
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  padding: 20px;
+  margin-bottom: 30px;
+  border: 2px solid #ffd000;
+}
+
+.input-group{
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  margin-bottom: 5px; 
+  font-weight: bold; 
+}
+
+.input-group input:hover, select:hover{
+  background-color: #dfe1e2;
+}
+
+.primeira-caixa-forms{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border: 2px solid #33ff00;
+}
+
+.segunda-caixa-forms{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-left: 240px;
+  padding-right: 240px;
+  border: 2px solid #00ffd5;
+}
+
+.terceira-caixa-forms{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #006eff;
+}
+
+.terceira-caixa-forms button{
+  color: #ffffff;
+  background-color: #a70000;
+  padding: 3px;
+  border-radius: 5px;
+}
+
+.terceira-caixa-forms button:hover{
+   background-color: #ff0000;
+   transition: background-color 0.3s ease;
+}
+
+
+.lista-alertas{
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: 90%;
+  border: 2px solid #8400ff;
+}
+
+.titulo-lista-cadastrados{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 2px solid #ff0095;
+
+}
+
+.id-cadastrados{
+  display: flex;
+  flex-direction: row;
+}
 
 
 
 /*RESPONSIVIDADE*/
-  @media (max-width: 768px) {
-    .container {
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-    }
-        .usuario-box {
-          width: 100%;
-          flex-direction: column;
-          height: auto;
-        }
-        .nome-usuario {
-          width: 100%;
-          padding: 10px;
-        }
-        .botao-sair {
-          width: 100%;
-        }
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+      .usuario-box {
+        width: 100%;
+        flex-direction: column;
+        height: auto;
       }
+      .nome-usuario {
+        width: 100%;
+        padding: 10px;
+      }
+      .botao-sair {
+        width: 100%;
+      }
+    }
