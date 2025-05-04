@@ -162,6 +162,22 @@ p{
 }
 
 
+label.error {
+  color: #ff0400;
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+  display: block;
+  padding-left: 1.8rem; /* Alinha com o campo */
+  line-height: 1.2;
+}
+
+/* Destaque para campos inválidos */
+input.error {
+  border: 1px solid #ffcccb !important;
+  box-shadow: 0 0 5px #ff0000 !important;
+}
+
+
 /* Responsividade para telas menores */
 @media (max-width: 768px) {
   .container {

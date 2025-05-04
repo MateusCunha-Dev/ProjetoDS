@@ -1,16 +1,18 @@
 $(document).ready(function() {
     $("#formulario").validate({
         rules: {
-            login: { required: true },  // ID "login" (como no PDF)
+            login: { required: true },
             senha: { required: true }
         },
         messages: {
-            login: "Campo obrigatório",
-            senha: "Campo obrigatórioo"
-        }
+            login: "Campo obrigatório!",
+            senha: "Campo obrigatório!"
+        },
+        errorClass: "error", // Adiciona classe de erro
+        validClass: "valid", // Classe para campos válidos (opcional)
+        errorElement: "label" // Usa elementos label para as mensagens
     });
 });
-
 async function autenticar() {
     if ($("#formulario").valid()) {  // Validação mantida (como no PDF)
         let login = $("#login").val();
