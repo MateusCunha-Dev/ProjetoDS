@@ -1,10 +1,12 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     verificarAutenticacao();
     carregarNomeUsuario();
+    await carregarProdutosOdinLine(); // Novo: Busca produtos da API
     exibirAlertas();
+    setInterval(monitorarAlertas, 60000);
 });
 
-// Funções de autenticação
+// ===== FUNÇÕES DE AUTENTICAÇÃO ===== 
 function verificarAutenticacao() {
     if (!localStorage.getItem('usuarioAutenticado')) {
         alert("Sessão expirada. Faça login novamente.");
@@ -19,32 +21,50 @@ function carregarNomeUsuario() {
     }
 }
 
-// Funções de alerta
+// ===== NOVA FUNÇÃO: CARREGAR PRODUTOS DA ODINLINE =====
+async function carregarProdutosOdinLine() {
+    const usuario = JSON.parse(localStorage.getItem('usuarioAutenticado'));
+    if (!usuario) return;
+
+    try {
+        const resposta = await fetch(`https://api-odinline.odiloncorrea.com/produto/${usuario.chave}/usuario`);
+        const produtos = await resposta.json();
+        
+        const selectProduto = document.getElementById('produtoId');
+        selectProduto.innerHTML = '<option value="">Selecione um produto</option>';
+        
+        produtos.forEach(produto => {
+            const option = document.createElement('option');
+            option.value = produto.id; // Usa o ID como valor
+            option.textContent = `${produto.descricao} (R$ ${produto.valor})`;
+            selectProduto.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Erro ao carregar produtos:", error);
+        alert("Não foi possível carregar os produtos. Preencha manualmente o ID.");
+    }
+}
+
+// ===== FUNÇÕES DE ALERTAS =====
 function cadastrarAlerta() {
-    // Captura segura dos valores com tratamento de vírgula
-    const produtoId = document.getElementById('produtoId').value.trim();
-    const produtoNome = document.getElementById('produtoNome').value.trim();
-    const valorAtual = parseFloat(document.getElementById('valorAtual').value.replace(',', '.')) || 0;
+    const produtoId = document.getElementById('produtoId').value;
     const valorDesejado = parseFloat(document.getElementById('valorDesejado').value.replace(',', '.')) || 0;
     const acao = document.getElementById('acao').value;
 
-    // Validação reforçada
-    if (!produtoId || !produtoNome || valorAtual <= 0 || valorDesejado <= 0) {
-        alert("Preencha todos os campos corretamente com valores positivos!");
+    // Validação
+    if (!produtoId || valorDesejado <= 0) {
+        alert("Selecione um produto e insira um valor válido!");
         return;
     }
 
-    if (valorDesejado >= valorAtual) {
-        alert("O valor desejado deve ser MENOR que o valor atual!");
-        return;
-    }
+    // Obtém o nome do produto selecionado
+    const selectProduto = document.getElementById('produtoId');
+    const produtoNome = selectProduto.options[selectProduto.selectedIndex].text.split(' (R$')[0];
 
-    // Criação do alerta com valores garantidos como números
     const novoAlerta = {
         id: Date.now(),
         produtoId,
-        produtoNome,
-        valorAtual: Number(valorAtual),
+        produtoNome, // Adiciona o nome para exibir na tabela
         valorDesejado: Number(valorDesejado),
         acao,
         status: "ativo",
@@ -59,7 +79,6 @@ function cadastrarAlerta() {
     // Atualização
     exibirAlertas();
     document.getElementById('formAlerta').reset();
-    alert("Alerta cadastrado com sucesso!");
 }
 
 function exibirAlertas() {
@@ -70,19 +89,21 @@ function exibirAlertas() {
         <table class="tabela-alertas">
             <thead>
                 <tr>
-                    <th>ID</th><th>Descrição</th><th>Valor</th>
-                    <th>Valor Desejado</th><th>Ação</th><th>Cancelar</th>
+                    <th>Produto</th>
+                    <th>Valor Desejado (R$)</th>
+                    <th>Ação</th>
+                    <th>Data</th>
+                    <th>Cancelar</th>
                 </tr>
             </thead>
             <tbody>
                 ${alertas.map(alerta => `
                     <tr>
-                        <td>${alerta.produtoId || 'N/A'}</td>
-                        <td>${alerta.produtoNome || 'N/A'}</td>
-                        <td>R$ ${Number(alerta.valorAtual || 0).toFixed(2)}</td>
-                        <td>R$ ${Number(alerta.valorDesejado || 0).toFixed(2)}</td>
-                        <td>${alerta.acao === 'notificar' ? 'Notificação' : 'Comprar'}</td>
-                        <td><button onclick="removerAlerta(${alerta.id})">Cancelar</button></td>
+                        <td>${alerta.produtoNome || alerta.produtoId}</td>
+                        <td>R$ ${alerta.valorDesejado.toFixed(2)}</td>
+                        <td>${alerta.acao === 'notificar' ? 'Notificar' : 'Comprar'}</td>
+                        <td>${alerta.dataCriacao}</td>
+                        <td><button class="btn-cancelar" onclick="removerAlerta(${alerta.id})">X</button></td>
                     </tr>
                 `).join('')}
             </tbody>
@@ -90,15 +111,51 @@ function exibirAlertas() {
     ` : '<p class="sem-alertas">Nenhum alerta cadastrado.</p>';
 }
 
+// ===== FUNÇÕES AUXILIARES =====
 function removerAlerta(id) {
-    if (!confirm("Remover este alerta?")) return;
+    if (!confirm("Deseja realmente remover este alerta?")) return;
     let alertas = JSON.parse(localStorage.getItem('alertas')) || [];
     alertas = alertas.filter(a => a.id !== id);
     localStorage.setItem('alertas', JSON.stringify(alertas));
     exibirAlertas();
 }
 
-// Logout global
+async function monitorarAlertas() {
+    const alertas = JSON.parse(localStorage.getItem('alertas')) || [];
+    
+    for (const alerta of alertas) {
+        try {
+            // Busca o valor ATUAL do produto na OdinLine
+            const resposta = await fetch(`https://api-odinline.odiloncorrea.com/produto/${alerta.produtoId}`);
+            const produto = await resposta.json();
+            const valorAtual = parseFloat(produto.valor);
+
+            if (valorAtual <= alerta.valorDesejado) {
+                if (alerta.acao === 'notificar') {
+                    alert(`ALERTA: ${alerta.produtoNome} atingiu R$ ${valorAtual.toFixed(2)} (valor desejado: R$ ${alerta.valorDesejado.toFixed(2)})!`);
+                } else {
+                    registrarCompra(alerta);
+                }
+                removerAlerta(alerta.id);
+            }
+        } catch (error) {
+            console.error(`Erro ao verificar o produto ${alerta.produtoId}:`, error);
+        }
+    }
+}
+
+function registrarCompra(alerta) {
+    const compra = {
+        produtoId: alerta.produtoId,
+        produtoNome: alerta.produtoNome,
+        valor: alerta.valorDesejado,
+        data: new Date().toLocaleString('pt-BR')
+    };
+    let compras = JSON.parse(localStorage.getItem('compras')) || [];
+    compras.push(compra);
+    localStorage.setItem('compras', JSON.stringify(compras));
+}
+
 window.sair = function() {
     localStorage.removeItem('usuarioAutenticado');
     window.location.href = "index.html";

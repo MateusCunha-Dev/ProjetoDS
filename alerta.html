@@ -50,20 +50,11 @@
                 <form id="formAlerta">
                     <div class="primeira-caixa-forms">
                         <div class="input-group">
-                            <label for="produtoId">ID do Produto</label>
-                            <input type="text" id="produtoId" required />
+                            <label for="produtoId">Produto</label>
+                            <select id="produtoId" required>
+                                <option value="">Carregando produtos...</option>
+                            </select>
                         </div>
-                        <div class="input-group">
-                            <label for="produtoNome">Nome do Produto</label>
-                            <input type="text" id="produtoNome" required />
-                        </div>
-                        <div class="input-group">
-                            <label for="valorAtual">Valor(R$)</label>
-                            <input type="number" id="valorAtual" step="0.01" required />
-                        </div>
-                    </div>
-
-                    <div class="segunda-caixa-forms">
                         <div class="input-group">
                             <label for="valorDesejado">Valor Desejado (R$)</label>
                             <input type="number" id="valorDesejado" step="0.01" required />
