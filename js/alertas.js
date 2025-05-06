@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', async function() {
     verificarAutenticacao();
     carregarNomeUsuario();
-    await carregarProdutosOdinLine(); // Novo: Busca produtos da API
+    await carregarProdutosOdinLine();
     exibirAlertas();
-    setInterval(monitorarAlertas, 60000);
+    setInterval(monitorarAlertas, 30000);
 });
 
 // ===== FUNÇÕES DE AUTENTICAÇÃO ===== 
@@ -21,7 +21,7 @@ function carregarNomeUsuario() {
     }
 }
 
-// ===== NOVA FUNÇÃO: CARREGAR PRODUTOS DA ODINLINE =====
+// ===== CARREGAR PRODUTOS DA ODINLINE =====
 async function carregarProdutosOdinLine() {
     const usuario = JSON.parse(localStorage.getItem('usuarioAutenticado'));
     if (!usuario) return;
@@ -35,8 +35,8 @@ async function carregarProdutosOdinLine() {
         
         produtos.forEach(produto => {
             const option = document.createElement('option');
-            option.value = produto.id; // Usa o ID como valor
-            option.textContent = `${produto.descricao} (R$ ${produto.valor})`;
+            option.value = produto.id;
+            option.textContent = `${produto.descricao}`;
             selectProduto.appendChild(option);
         });
     } catch (error) {
@@ -51,32 +51,28 @@ function cadastrarAlerta() {
     const valorDesejado = parseFloat(document.getElementById('valorDesejado').value.replace(',', '.')) || 0;
     const acao = document.getElementById('acao').value;
 
-    // Validação
     if (!produtoId || valorDesejado <= 0) {
         alert("Selecione um produto e insira um valor válido!");
         return;
     }
 
-    // Obtém o nome do produto selecionado
     const selectProduto = document.getElementById('produtoId');
-    const produtoNome = selectProduto.options[selectProduto.selectedIndex].text.split(' (R$')[0];
+    const produtoNome = selectProduto.options[selectProduto.selectedIndex].text;
 
     const novoAlerta = {
         id: Date.now(),
         produtoId,
-        produtoNome, // Adiciona o nome para exibir na tabela
+        produtoNome,
         valorDesejado: Number(valorDesejado),
         acao,
         status: "ativo",
         dataCriacao: new Date().toLocaleString('pt-BR')
     };
 
-    // Armazenamento
     let alertas = JSON.parse(localStorage.getItem('alertas')) || [];
     alertas.push(novoAlerta);
     localStorage.setItem('alertas', JSON.stringify(alertas));
 
-    // Atualização
     exibirAlertas();
     document.getElementById('formAlerta').reset();
 }
@@ -111,7 +107,6 @@ function exibirAlertas() {
     ` : '<p class="sem-alertas">Nenhum alerta cadastrado.</p>';
 }
 
-// ===== FUNÇÕES AUXILIARES =====
 function removerAlerta(id) {
     if (!confirm("Deseja realmente remover este alerta?")) return;
     let alertas = JSON.parse(localStorage.getItem('alertas')) || [];
@@ -120,6 +115,7 @@ function removerAlerta(id) {
     exibirAlertas();
 }
 
+// ===== MONITORAMENTO E REGISTRO DE COMPRAS (CORREÇÃO PRINCIPAL) =====
 async function monitorarAlertas() {
     const alertas = JSON.parse(localStorage.getItem('alertas')) || [];
     
@@ -134,7 +130,7 @@ async function monitorarAlertas() {
                 if (alerta.acao === 'notificar') {
                     alert(`ALERTA: ${alerta.produtoNome} atingiu R$ ${valorAtual.toFixed(2)} (valor desejado: R$ ${alerta.valorDesejado.toFixed(2)})!`);
                 } else {
-                    registrarCompra(alerta);
+                    await registrarCompra(alerta, valorAtual); // Passa o valorAtual para a função
                 }
                 removerAlerta(alerta.id);
             }
@@ -144,16 +140,31 @@ async function monitorarAlertas() {
     }
 }
 
-function registrarCompra(alerta) {
-    const compra = {
-        produtoId: alerta.produtoId,
-        produtoNome: alerta.produtoNome,
-        valor: alerta.valorDesejado,
-        data: new Date().toLocaleString('pt-BR')
-    };
-    let compras = JSON.parse(localStorage.getItem('compras')) || [];
-    compras.push(compra);
-    localStorage.setItem('compras', JSON.stringify(compras));
+// Função corrigida para registrar o valor REAL do produto
+async function registrarCompra(alerta, valorReal) {
+    try {
+        const compras = JSON.parse(localStorage.getItem('compras')) || [];
+        
+        // Verifica se já foi comprado recentemente (evita duplicatas)
+        const compraRecente = compras.some(c => 
+            c.produtoId === alerta.produtoId && 
+            (new Date() - new Date(c.data)) < 300000 // 5 minutos
+        );
+
+        if (!compraRecente) {
+            compras.push({
+                produtoId: alerta.produtoId,
+                produtoNome: alerta.produtoNome,
+                valor: valorReal, // Usa o valor REAL, não o desejado
+                data: new Date().toLocaleString('pt-BR')
+            });
+            localStorage.setItem('compras', JSON.stringify(compras));
+            alert(`COMPRA REGISTRADA: ${alerta.produtoNome} por R$ ${valorReal.toFixed(2)} (valor desejado: R$ ${alerta.valorDesejado.toFixed(2)})`);
+        }
+    } catch (error) {
+        console.error("Erro ao registrar compra:", error);
+        alert("Falha ao registrar a compra. Tente novamente.");
+    }
 }
 
 window.sair = function() {

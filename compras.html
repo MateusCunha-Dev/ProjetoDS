@@ -37,18 +37,26 @@
         </div>
     </header>
 
-    <div class="fundo-da-tela">
-
-        <div class="conteudo-principal">
-            <div class="titulo-compras">
-                <h1>Minhas Compras</h1>
-            </div>
-
-
+    <main>
+        <div class="lista-compras">
+            <h2>Produtos Comprados</h2>
+            <table class="tabela-compras">
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Valor Pago (R$)</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody id="corpoTabelaCompras">
+                    <!-- Linhas serão preenchidas via JS -->
+                </tbody>
+            </table>
+            <p id="semCompras" class="sem-compras">Nenhuma compra registrada.</p>
         </div>
+    </main>
 
-
-    </div>
-
+    <!-- Scripts -->
+    <script src="js/compras.js"></script>
 </body>
 </html>

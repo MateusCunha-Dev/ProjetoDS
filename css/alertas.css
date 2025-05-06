@@ -146,6 +146,8 @@ body {
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 20px;
+  padding-right: 150px;
+  padding-left: 150px;
 }
 
 .segunda-caixa-forms {

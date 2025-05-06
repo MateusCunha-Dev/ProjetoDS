@@ -89,34 +89,34 @@
 
   /*CONTEUDO*/
 
+.tabela-compras {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
 
-  .fundo-da-tela {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #b9b8b8;
-    margin-top: 30px;
-  }
+.tabela-compras th {
+  background-color: #8A0000;
+  color: white;
+  padding: 12px;
+  text-align: left;
+}
 
-  .conteudo-principal {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #ffffff;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    padding-bottom: 39px;
-    width: 90%;
-    height: auto;
-    border: 2px solid #000000;
-  }
+.tabela-compras td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #ddd;
+}
 
-  .titulo-compras {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
+.tabela-compras tr:hover {
+  background-color: #f5f5f5;
+}
 
-
+.sem-compras {
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+  margin-top: 20px;
+  display: none; /* Inicialmente oculto */
+}
