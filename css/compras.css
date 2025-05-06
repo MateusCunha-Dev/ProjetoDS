@@ -6,7 +6,7 @@
   
   body {
     font-family: Arial, sans-serif;
-    background-color: #b9b8b8;
+    background-color: #e9e9e9;
   }
   
   /* CABEÇALHO */
@@ -89,10 +89,35 @@
 
   /*CONTEUDO*/
 
+  .fundo-da-tela {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #e9e9e9;
+    margin-top: 30px;
+  }
+
+  .fundo-da-tela h1{
+    color: #8A0000;
+    text-decoration: underline;
+  }
+
+  
+  .conteudo-principal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 70%;
+    height: auto;
+    border: 3px solid #000000;
+  }
+ 
 .tabela-compras {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
   background-color: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -100,13 +125,14 @@
 .tabela-compras th {
   background-color: #8A0000;
   color: white;
-  padding: 12px;
+  padding: 18px;
   text-align: left;
 }
 
 .tabela-compras td {
-  padding: 10px 12px;
+  padding: 18px;
   border-bottom: 1px solid #ddd;
+  text-align: left;
 }
 
 .tabela-compras tr:hover {
@@ -119,4 +145,60 @@
   font-style: italic;
   margin-top: 20px;
   display: none; /* Inicialmente oculto */
+}
+
+
+
+/* RESPONSIVIDADE - Mantendo todo o visual original */
+/* RESPONSIVIDADE ESPECÍFICA PARA TABELAS */
+@media (max-width: 992px) {
+  .conteudo-principal {
+    width: 90%;
+    padding: 15px;
+  }
+  
+  .tabela-compras {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Cabeçalho */
+  .container {
+    flex-wrap: wrap;
+    padding: 25px;
+  }
+  
+  .links, .usuario {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  /* Tabela */
+  .tabela-compras {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .tabela-compras th, 
+  .tabela-compras td {
+    min-width: 120px; /* Evita colunas muito estreitas */
+    padding: 12px 8px;
+  }
+}
+
+@media (max-width: 576px) {
+  /* Ajustes finos para mobile */
+  .tabela-compras th, 
+  .tabela-compras td {
+    padding: 10px 6px;
+    font-size: 0.85rem;
+  }
+  
+  .conteudo-principal {
+    width: 98%;
+    margin: 10px auto;
+    border-width: 2px;
+  }
 }

@@ -6,7 +6,7 @@
 
   body{
     font-family: Arial, sans-serif;
-    background-color: #e0e0e0;
+    background-color: #e9e9e9;
   }
 
   .container{
@@ -100,23 +100,63 @@
 
 
 /*RESPONSIVIDADE*/
-  @media (max-width: 768px) {
-    .container {
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-    }
-        .usuario-box {
-          width: 100%;
-          flex-direction: column;
-          height: auto;
-        }
-        .nome-usuario {
-          width: 100%;
-          padding: 10px;
-        }
-        .botao-sair {
-          width: 100%;
-        }
-      }
-      
+@media (max-width: 1024px) {
+  .container {
+    padding: 30px;
+  }
+  
+  .usuario-box {
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 25px;
+  }
+  
+  .links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .usuario-box {
+    width: 100%;
+    max-width: 350px;
+  }
+  
+  .nome-usuario {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 20px 15px;
+  }
+  
+  .links {
+    gap: 12px;
+  }
+  
+  .links a {
+    font-size: 0.9rem;
+    padding: 5px 8px;
+  }
+  
+  .usuario-box {
+    height: 36px;
+  }
+  
+  .nome-usuario {
+    padding: 0 8px;
+    font-size: 0.85rem;
+  }
+  
+  .botao-sair {
+    width: 45px;
+  }
+}

@@ -6,58 +6,59 @@
   font-family: 'Inter', sans-serif;
 }
 
-/* Estilo do body */
+/* Estilo do body (tela cheia) */
 body {
   width: 100%;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(to top, #2E0000,
-  #450000,
-  #5C0000,
-  #730000,
-  #8A0000);
-
+  background-image: linear-gradient(to top, #2E0000, #450000, #5C0000, #730000, #8A0000);
+  padding: 20px;
 }
 
-/* Estilo principal do container */
+/* Container principal */
 .container {
-  width: 80%;
-  height: 80vh;
+  width: 90%;
+  max-width: 1200px;
+  height: 90vh;
+  max-height: 800px;
   display: flex;
   box-shadow: 10px 10px 10px #2E0000;
-  border-radius: 40px; /* <<< Adicione essa linha */
-  overflow: hidden; /* <<< Essa linha é importante pra borda arredondada cortar o conteúdo certinho */
+  border-radius: 40px;
+  overflow: hidden;
+  background-color: #fff;
 }
 
 /* Área da imagem */
 .form-image {
   width: 50%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #ffffff;
-  padding: 1rem;
+  padding: 2rem;
   border-right: 1px solid #990000;
 }
 
 .form-image img {
-  width: 28rem;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 80%;
+  object-fit: contain;
 }
 
 /* Área do formulário */
 .form {
   width: 50%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(to top, #630000,
-  #720000,
-  #810000,
-  #910000,
-  #990000d7);
+  background-image: linear-gradient(to top, #630000, #720000, #810000, #910000, #990000d7);
   padding: 3rem;
 }
 
@@ -69,12 +70,15 @@ body {
 }
 
 .form-cabecalho h1 {
+  color: white;
+  font-size: 2.5rem;
   position: relative;
 }
 
 /* Inputs */
 .input-group {
   width: 100%;
+  max-width: 400px;
   margin-top: 1rem;
 }
 
@@ -91,12 +95,12 @@ body {
   border-radius: 10px;
   box-shadow: 1px 1px 6px #0000001c;
   font-size: 1rem;
+  width: 100%;
 }
 
 .input-box input:hover {
   background-color: #8a818175;
 }
-
 
 .input-box label {
   font-size: 0.9rem;
@@ -104,41 +108,7 @@ body {
   color: #000000c0;
 }
 
-/* Botões */
-.button-group {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 2rem;
-}
-
-.button-group button {
-  padding: 0.8rem;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.25s;
-}
-
-/* Botões específicos */
-.entrar {
-  background-color:#e60000;
-}
-.entrar:hover {
-  background-color: #fc6666;
-}
-
-h1{
-  color: white;
-}
-p{
-  color: white;
-}
-
-
+/* Input com ícone */
 .input-with-icon {
   display: flex;
   align-items: center;
@@ -159,53 +129,130 @@ p{
 
 .input-icon {
   color: #990000;
+  min-width: 20px;
 }
 
+/* Botões */
+.button-group {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 2rem;
+}
 
+.button-group button {
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.25s;
+  width: 100%;
+}
+
+.entrar {
+  background-color: #e60000;
+}
+
+.entrar:hover {
+  background-color: #fc6666;
+}
+
+/* Validação */
 label.error {
   color: #ff0400;
   font-size: 0.8rem;
   margin-top: 0.3rem;
   display: block;
-  padding-left: 1.8rem; /* Alinha com o campo */
+  padding-left: 1.8rem;
   line-height: 1.2;
 }
 
-/* Destaque para campos inválidos */
 input.error {
   border: 1px solid #ffcccb !important;
   box-shadow: 0 0 5px #ff0000 !important;
 }
 
+/* Textos */
+h1, p {
+  color: white;
+}
 
-/* Responsividade para telas menores */
+/* ========= RESPONSIVIDADE ========= */
+@media (max-width: 1024px) {
+  .container {
+    height: 95vh;
+  }
+  
+  .form-image img {
+    max-height: 70%;
+  }
+  
+  .form-cabecalho h1 {
+    font-size: 2.2rem;
+  }
+}
+
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
-    width: 90%;
     height: auto;
     min-height: 100vh;
+    max-height: none;
+  }
+
+  .form-image, .form {
+    width: 100%;
+    height: auto;
   }
 
   .form-image {
-    width: 100%;
-    height: 150px; /* altura controlada */
+    padding: 1.5rem;
+    min-height: 200px;
     border-right: none;
     border-bottom: 1px solid #990000;
-    padding: 1rem;
   }
 
   .form-image img {
-    width: 120px; /* imagem pequena */
-    height: auto;
+    max-height: 150px;
   }
 
   .form {
-    width: 100%;
-    padding: 2rem 1rem;
+    padding: 2rem 1.5rem;
+    flex-grow: 1;
+  }
+  
+  .form-cabecalho h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
   }
 
-  .button-group {
-    margin-top: 1.5rem;
+  .container {
+    width: 100%;
+    border-radius: 20px;
+  }
+
+  .form {
+    padding: 1.5rem 1rem;
+  }
+
+  .form-cabecalho h1 {
+    font-size: 1.8rem;
+  }
+  
+  .input-with-icon {
+    padding: 0.7rem 1rem;
+  }
+  
+  .button-group button {
+    padding: 0.7rem;
   }
 }
