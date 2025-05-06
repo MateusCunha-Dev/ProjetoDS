@@ -1,0 +1,122 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #b9b8b8;
+  }
+  
+  /* CABEÇALHO */
+  .container {
+    padding: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-image: linear-gradient(to bottom, #8A0000, #a70000, #c50000, #e60000, #ff0000);
+  }
+  
+  .nomeEmpresa h1 {
+    color: #ffffff;
+  }
+  
+  .links {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .links a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .links a:hover {
+    text-decoration: underline;
+  }
+  
+  .links a:focus {
+    outline: 2px solid white;
+  }
+  
+  .usuario {
+    display: flex;
+    align-items: center;
+  }
+  
+  .usuario-box {
+    display: flex;
+    height: 40px;
+    width: 100%;
+    max-width: 375px;
+    justify-content: space-between;
+    border: 1px solid #000000;
+  }
+  
+  .icone-usuario {
+    color: white;
+    height: 40px;
+  }
+  
+  .nome-usuario {
+    display: flex;
+    padding-right: 5px;
+    padding-left: 5px;
+    background-color: #ffffff;
+    color: #000000;
+    width: 325px;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .botao-sair {
+    color: #ffffff;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: #a70000;
+    cursor: pointer;
+    border: none;
+    border-left: 1px solid #8A0000;
+    width: 50px;
+  }
+  
+  .botao-sair:hover {
+    color: #000000;
+    background-color: #ff4d4d;
+  }
+
+
+  /*CONTEUDO*/
+
+
+  .fundo-da-tela {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #b9b8b8;
+    margin-top: 30px;
+  }
+
+  .conteudo-principal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 39px;
+    width: 90%;
+    height: auto;
+    border: 2px solid #000000;
+  }
+
+  .titulo-compras {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+
