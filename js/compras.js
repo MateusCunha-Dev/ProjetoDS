@@ -21,15 +21,23 @@ function carregarNomeUsuario() {
 
 // ===== FUNÇÃO PRINCIPAL (EXIBIR COMPRAS) =====
 function exibirCompras() {
-    const compras = JSON.parse(localStorage.getItem('compras')) || [];
+    const usuario = JSON.parse(localStorage.getItem('usuarioAutenticado'));
+    if (!usuario) {
+        window.location.href = "index.html";
+        return;
+    }
+
+    const chaveCompras = `compras_${usuario.id}`;
+    const compras = JSON.parse(localStorage.getItem(chaveCompras)) || [];
     const corpoTabela = document.getElementById('corpoTabelaCompras');
     const mensagemSemCompras = document.getElementById('semCompras');
 
-    // Limpa a tabela e mensagem
     corpoTabela.innerHTML = '';
     mensagemSemCompras.style.display = compras.length === 0 ? 'block' : 'none';
 
-    // Preenche as linhas
+    // Ordena por data (mais recente primeiro)
+    compras.sort((a, b) => new Date(b.data) - new Date(a.data));
+
     compras.forEach(compra => {
         const linha = document.createElement('tr');
         linha.innerHTML = `

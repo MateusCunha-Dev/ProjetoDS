@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     carregarNomeUsuario();
     await carregarProdutosOdinLine();
     exibirAlertas();
-    setInterval(monitorarAlertas, 30000);
+    setInterval(monitorarAlertas, 10000);
 });
 
 // ===== FUNÇÕES DE AUTENTICAÇÃO ===== 
@@ -47,6 +47,9 @@ async function carregarProdutosOdinLine() {
 
 // ===== FUNÇÕES DE ALERTAS =====
 function cadastrarAlerta() {
+    const usuario = JSON.parse(localStorage.getItem('usuarioAutenticado'));
+    if (!usuario) return;
+
     const produtoId = document.getElementById('produtoId').value;
     const valorDesejado = parseFloat(document.getElementById('valorDesejado').value.replace(',', '.')) || 0;
     const acao = document.getElementById('acao').value;
@@ -66,19 +69,25 @@ function cadastrarAlerta() {
         valorDesejado: Number(valorDesejado),
         acao,
         status: "ativo",
-        dataCriacao: new Date().toLocaleString('pt-BR')
+        dataCriacao: new Date().toLocaleString('pt-BR'),
+        usuarioId: usuario.id
     };
 
-    let alertas = JSON.parse(localStorage.getItem('alertas')) || [];
+    const chaveAlertas = `alertas_${usuario.id}`;
+    let alertas = JSON.parse(localStorage.getItem(chaveAlertas)) || [];
     alertas.push(novoAlerta);
-    localStorage.setItem('alertas', JSON.stringify(alertas));
+    localStorage.setItem(chaveAlertas, JSON.stringify(alertas));
 
     exibirAlertas();
     document.getElementById('formAlerta').reset();
 }
 
 function exibirAlertas() {
-    const alertas = JSON.parse(localStorage.getItem('alertas')) || [];
+    const usuario = JSON.parse(localStorage.getItem('usuarioAutenticado'));
+    if (!usuario) return;
+
+    const chaveAlertas = `alertas_${usuario.id}`;
+    const alertas = JSON.parse(localStorage.getItem(chaveAlertas)) || [];
     const container = document.getElementById('alertasContainer');
 
     container.innerHTML = alertas.length > 0 ? `
@@ -109,19 +118,27 @@ function exibirAlertas() {
 
 function removerAlerta(id) {
     if (!confirm("Deseja realmente remover este alerta?")) return;
-    let alertas = JSON.parse(localStorage.getItem('alertas')) || [];
+    
+    const usuario = JSON.parse(localStorage.getItem('usuarioAutenticado'));
+    if (!usuario) return;
+
+    const chaveAlertas = `alertas_${usuario.id}`;
+    let alertas = JSON.parse(localStorage.getItem(chaveAlertas)) || [];
     alertas = alertas.filter(a => a.id !== id);
-    localStorage.setItem('alertas', JSON.stringify(alertas));
+    localStorage.setItem(chaveAlertas, JSON.stringify(alertas));
     exibirAlertas();
 }
 
-// ===== MONITORAMENTO E REGISTRO DE COMPRAS (CORREÇÃO PRINCIPAL) =====
+// ===== MONITORAMENTO E REGISTRO DE COMPRAS =====
 async function monitorarAlertas() {
-    const alertas = JSON.parse(localStorage.getItem('alertas')) || [];
+    const usuario = JSON.parse(localStorage.getItem('usuarioAutenticado'));
+    if (!usuario) return;
+
+    const chaveAlertas = `alertas_${usuario.id}`;
+    const alertas = JSON.parse(localStorage.getItem(chaveAlertas)) || [];
     
     for (const alerta of alertas) {
         try {
-            // Busca o valor ATUAL do produto na OdinLine
             const resposta = await fetch(`https://api-odinline.odiloncorrea.com/produto/${alerta.produtoId}`);
             const produto = await resposta.json();
             const valorAtual = parseFloat(produto.valor);
@@ -130,7 +147,7 @@ async function monitorarAlertas() {
                 if (alerta.acao === 'notificar') {
                     alert(`ALERTA: ${alerta.produtoNome} atingiu R$ ${valorAtual.toFixed(2)} (valor desejado: R$ ${alerta.valorDesejado.toFixed(2)})!`);
                 } else {
-                    await registrarCompra(alerta, valorAtual); // Passa o valorAtual para a função
+                    await registrarCompra(alerta, valorAtual);
                 }
                 removerAlerta(alerta.id);
             }
@@ -140,25 +157,32 @@ async function monitorarAlertas() {
     }
 }
 
-// Função corrigida para registrar o valor REAL do produto
 async function registrarCompra(alerta, valorReal) {
     try {
-        const compras = JSON.parse(localStorage.getItem('compras')) || [];
+        const usuario = JSON.parse(localStorage.getItem('usuarioAutenticado'));
+        if (!usuario) {
+            alert("Usuário não autenticado");
+            return;
+        }
+
+        const chaveCompras = `compras_${usuario.id}`;
+        const compras = JSON.parse(localStorage.getItem(chaveCompras)) || [];
         
-        // Verifica se já foi comprado recentemente (evita duplicatas)
         const compraRecente = compras.some(c => 
             c.produtoId === alerta.produtoId && 
-            (new Date() - new Date(c.data)) < 300000 // 5 minutos
+            (new Date() - new Date(c.data)) < 300000
         );
 
         if (!compraRecente) {
             compras.push({
                 produtoId: alerta.produtoId,
                 produtoNome: alerta.produtoNome,
-                valor: valorReal, // Usa o valor REAL, não o desejado
-                data: new Date().toLocaleString('pt-BR')
+                valor: valorReal,
+                data: new Date().toLocaleString('pt-BR'),
+                usuarioId: usuario.id
             });
-            localStorage.setItem('compras', JSON.stringify(compras));
+            
+            localStorage.setItem(chaveCompras, JSON.stringify(compras));
             alert(`COMPRA REGISTRADA: ${alerta.produtoNome} por R$ ${valorReal.toFixed(2)} (valor desejado: R$ ${alerta.valorDesejado.toFixed(2)})`);
         }
     } catch (error) {
