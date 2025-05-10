@@ -9,7 +9,7 @@
     background-color: #e9e9e9;
   }
   
-  /* CABEÇALHO */
+  
   .container {
     padding: 40px;
     display: flex;
@@ -86,9 +86,6 @@
     background-color: #ff4d4d;
   }
 
-
-  /*CONTEUDO*/
-
   .fundo-da-tela {
     display: flex;
     flex-direction: column;
@@ -144,13 +141,11 @@
   color: #6c757d;
   font-style: italic;
   margin-top: 20px;
-  display: none; /* Inicialmente oculto */
+  display: none;
 }
 
 
-
-/* RESPONSIVIDADE - Mantendo todo o visual original */
-/* RESPONSIVIDADE ESPECÍFICA PARA TABELAS */
+/*RESPONSIVIDADE*/
 @media (max-width: 992px) {
   .conteudo-principal {
     width: 90%;
@@ -163,7 +158,6 @@
 }
 
 @media (max-width: 768px) {
-  /* Cabeçalho */
   .container {
     flex-wrap: wrap;
     padding: 25px;
@@ -174,7 +168,6 @@
     justify-content: center;
   }
   
-  /* Tabela */
   .tabela-compras {
     display: block;
     overflow-x: auto;
@@ -183,13 +176,12 @@
   
   .tabela-compras th, 
   .tabela-compras td {
-    min-width: 120px; /* Evita colunas muito estreitas */
+    min-width: 120px;
     padding: 12px 8px;
   }
 }
 
 @media (max-width: 576px) {
-  /* Ajustes finos para mobile */
   .tabela-compras th, 
   .tabela-compras td {
     padding: 10px 6px;

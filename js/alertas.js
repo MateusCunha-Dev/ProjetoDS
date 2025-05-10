@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     setInterval(monitorarAlertas, 10000);
 });
 
-// ===== FUNÇÕES DE AUTENTICAÇÃO ===== 
+
 function verificarAutenticacao() {
     if (!localStorage.getItem('usuarioAutenticado')) {
         alert("Sessão expirada. Faça login novamente.");
@@ -21,7 +21,7 @@ function carregarNomeUsuario() {
     }
 }
 
-// ===== CARREGAR PRODUTOS DA ODINLINE =====
+
 async function carregarProdutosOdinLine() {
     const usuario = JSON.parse(localStorage.getItem('usuarioAutenticado'));
     if (!usuario) return;
@@ -36,7 +36,7 @@ async function carregarProdutosOdinLine() {
         produtos.forEach(produto => {
             const option = document.createElement('option');
             option.value = produto.id;
-            option.textContent = `${produto.descricao}`;
+            option.textContent = `${produto.descricao} - R$ ${parseFloat(produto.valor).toFixed(2)}`;
             selectProduto.appendChild(option);
         });
     } catch (error) {
@@ -45,7 +45,7 @@ async function carregarProdutosOdinLine() {
     }
 }
 
-// ===== FUNÇÕES DE ALERTAS =====
+
 function cadastrarAlerta() {
     const usuario = JSON.parse(localStorage.getItem('usuarioAutenticado'));
     if (!usuario) return;
@@ -60,7 +60,8 @@ function cadastrarAlerta() {
     }
 
     const selectProduto = document.getElementById('produtoId');
-    const produtoNome = selectProduto.options[selectProduto.selectedIndex].text;
+    const optionText = selectProduto.options[selectProduto.selectedIndex].text;
+    const produtoNome = optionText.split(' - R$ ')[0];
 
     const novoAlerta = {
         id: Date.now(),
@@ -129,7 +130,7 @@ function removerAlerta(id) {
     exibirAlertas();
 }
 
-// ===== MONITORAMENTO E REGISTRO DE COMPRAS =====
+
 async function monitorarAlertas() {
     const usuario = JSON.parse(localStorage.getItem('usuarioAutenticado'));
     if (!usuario) return;

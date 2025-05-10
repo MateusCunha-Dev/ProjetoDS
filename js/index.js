@@ -8,13 +8,13 @@ $(document).ready(function() {
             login: "Campo obrigatório!",
             senha: "Campo obrigatório!"
         },
-        errorClass: "error", // Adiciona classe de erro
-        validClass: "valid", // Classe para campos válidos (opcional)
-        errorElement: "label" // Usa elementos label para as mensagens
+        errorClass: "error",
+        validClass: "valid", 
+        errorElement: "label" 
     });
 });
 async function autenticar() {
-    if ($("#formulario").valid()) {  // Validação mantida (como no PDF)
+    if ($("#formulario").valid()) {  
         let login = $("#login").val();
         let senha = $("#senha").val();
         try {

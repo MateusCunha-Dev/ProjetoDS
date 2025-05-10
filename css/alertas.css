@@ -9,7 +9,7 @@ body {
   background-color: #e9e9e9;
 }
 
-/* CABEÇALHO */
+
 .container {
   padding: 40px;
   display: flex;
@@ -86,7 +86,7 @@ body {
   background-color: #ff4d4d;
 }
 
-/* CONTEÚDO PRINCIPAL */
+
 .fundo-da-tela {
   display: flex;
   flex-direction: column;
@@ -183,6 +183,18 @@ body {
   transition: background-color 0.3s ease;
 }
 
+#produtoId {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#produtoId option {
+    padding: 8px;
+    white-space: normal; 
+}
+
 .lista-alertas {
   display: flex;
   flex-direction: column;
@@ -198,7 +210,7 @@ body {
   margin-bottom: 20px;
 }
 
-/* ESTILO DA TABELA */
+
 .tabela-alertas {
   width: 100%;
   border-collapse: collapse;
@@ -244,7 +256,7 @@ body {
   margin-top: 20px;
 }
 
-/* RESPONSIVIDADE - Mantendo todo o visual original */
+/*RESPONSIVIDADE*/
 @media (max-width: 1200px) {
   .primeira-caixa-forms {
     width: 70%;

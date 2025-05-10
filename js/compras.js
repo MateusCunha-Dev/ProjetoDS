@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     exibirCompras();
 });
 
-// ===== FUNÇÕES COMPARTILHADAS =====
+
 function verificarAutenticacao() {
     if (!localStorage.getItem('usuarioAutenticado')) {
         alert("Sessão expirada. Faça login novamente.");
@@ -19,7 +19,7 @@ function carregarNomeUsuario() {
     }
 }
 
-// ===== FUNÇÃO PRINCIPAL (EXIBIR COMPRAS) =====
+
 function exibirCompras() {
     const usuario = JSON.parse(localStorage.getItem('usuarioAutenticado'));
     if (!usuario) {
@@ -35,7 +35,7 @@ function exibirCompras() {
     corpoTabela.innerHTML = '';
     mensagemSemCompras.style.display = compras.length === 0 ? 'block' : 'none';
 
-    // Ordena por data (mais recente primeiro)
+
     compras.sort((a, b) => new Date(b.data) - new Date(a.data));
 
     compras.forEach(compra => {
@@ -49,7 +49,7 @@ function exibirCompras() {
     });
 }
 
-// ===== LOGOUT =====
+
 window.sair = function() {
     localStorage.removeItem('usuarioAutenticado');
     window.location.href = "index.html";
